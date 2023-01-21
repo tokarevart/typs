@@ -1,0 +1,12 @@
+[package]
+name = "typs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.68"
+fops = { git = "https://github.com/tokarevart/fops.git" }
+tokio = { version = "1.23.0", features = ["parking_lot", "sync"] }
+
+[dev-dependencies]
+tokio = { version = "1.23.0", features = ["rt", "macros"] }
