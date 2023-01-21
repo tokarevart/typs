@@ -16,7 +16,9 @@ impl<M: Msg> Topic<M> {
     }
 
     pub fn publish(&self, msg: M) -> anyhow::Result<usize> {
-        self.raw.publish(msg.into()).map_err(anyhow::Error::new)
+        self.raw
+            .publish(fops::BinaryMsg::from(msg.into()))
+            .map_err(anyhow::Error::new)
     }
 
     pub fn subscribe(&self) -> Subscription<M>

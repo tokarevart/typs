@@ -11,16 +11,16 @@ impl TopicName for TestMsg {
     }
 }
 
-impl Into<fops::BinaryMsg> for TestMsg {
-    fn into(self) -> fops::BinaryMsg {
-        fops::BinaryMsg::from(self.num.to_be_bytes())
+impl Into<Vec<u8>> for TestMsg {
+    fn into(self) -> Vec<u8> {
+        self.num.to_be_bytes().to_vec()
     }
 }
 
-impl TryFrom<fops::BinaryMsg> for TestMsg {
+impl TryFrom<Vec<u8>> for TestMsg {
     type Error = anyhow::Error;
 
-    fn try_from(value: fops::BinaryMsg) -> anyhow::Result<Self> {
+    fn try_from(value: Vec<u8>) -> anyhow::Result<Self> {
         let num = i32::from_be_bytes(value.as_slice().try_into()?);
         Ok(Self { num })
     }
@@ -39,17 +39,17 @@ impl TopicName for AnotherTestMsg {
     }
 }
 
-impl Into<fops::BinaryMsg> for AnotherTestMsg {
-    fn into(self) -> fops::BinaryMsg {
-        fops::BinaryMsg::from(self.string.as_bytes())
+impl Into<Vec<u8>> for AnotherTestMsg {
+    fn into(self) -> Vec<u8> {
+        self.string.as_bytes().to_vec()
     }
 }
 
-impl TryFrom<fops::BinaryMsg> for AnotherTestMsg {
+impl TryFrom<Vec<u8>> for AnotherTestMsg {
     type Error = anyhow::Error;
 
-    fn try_from(value: fops::BinaryMsg) -> anyhow::Result<Self> {
-        let string = String::from_utf8(value.into())?;
+    fn try_from(value: Vec<u8>) -> anyhow::Result<Self> {
+        let string = String::from_utf8(value)?;
         Ok(Self { string })
     }
 }
