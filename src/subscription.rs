@@ -2,12 +2,12 @@ use crate::msg::Msg;
 use std::marker::PhantomData;
 
 pub struct Subscription<M: Msg> {
-    raw: fops::Subscription<fops::BinaryMsg>,
+    raw: fops::Subscription<Vec<u8>>,
     phantom: PhantomData<M>,
 }
 
 impl<M: Msg> Subscription<M> {
-    pub(crate) fn new(raw: fops::Subscription<fops::BinaryMsg>) -> Self {
+    pub(crate) fn new(raw: fops::Subscription<Vec<u8>>) -> Self {
         Self {
             raw,
             phantom: PhantomData,
