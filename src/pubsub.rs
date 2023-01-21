@@ -19,7 +19,7 @@ impl PubSub {
 
     pub async fn topic<M: Msg>(&self) -> Topic<M> {
         let raw = self.raw_topic(M::topic_name()).await;
-        Topic::new(raw)
+        Topic::from_raw(raw)
     }
 
     pub async fn raw_topic(&self, name: &[u8]) -> fops::Topic<Vec<u8>> {

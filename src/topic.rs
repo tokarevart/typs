@@ -8,7 +8,7 @@ pub struct Topic<M: Msg> {
 }
 
 impl<M: Msg> Topic<M> {
-    pub(crate) fn new(raw: fops::Topic<Vec<u8>>) -> Self {
+    pub fn from_raw(raw: fops::Topic<Vec<u8>>) -> Self {
         Self {
             raw,
             phantom: PhantomData,
