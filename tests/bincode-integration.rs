@@ -1,7 +1,6 @@
-use bincode::{Decode, Encode};
 use typs::{PubSub, TopicName};
 
-#[derive(Encode, Decode, PartialEq, Eq, Clone, Debug)]
+#[derive(bincode::Encode, bincode::Decode, PartialEq, Eq, Clone, Debug)]
 pub struct TestMsg {
     num: i32,
 }
@@ -28,7 +27,7 @@ impl typs::Decode for TestMsg {
 
 impl typs::Msg for TestMsg {}
 
-#[derive(Encode, Decode, PartialEq, Eq, Clone, Debug)]
+#[derive(bincode::Encode, bincode::Decode, PartialEq, Eq, Clone, Debug)]
 pub struct AnotherTestMsg {
     string: String,
 }
