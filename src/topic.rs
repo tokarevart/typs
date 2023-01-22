@@ -16,7 +16,9 @@ impl<M: Msg> Topic<M> {
     }
 
     pub fn publish(&self, msg: M) -> anyhow::Result<usize> {
-        self.raw.publish(msg.into()).map_err(anyhow::Error::new)
+        let mut raw_msg = Vec::new();
+        msg.encode(&mut raw_msg)?;
+        self.raw.publish(raw_msg).map_err(anyhow::Error::new)
     }
 
     pub fn subscribe(&self) -> Subscription<M>

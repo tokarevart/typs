@@ -1,4 +1,4 @@
-use crate::msg::Msg;
+use crate::{msg::Msg, Decode};
 use std::marker::PhantomData;
 
 pub struct Subscription<M: Msg> {
@@ -17,9 +17,8 @@ impl<M: Msg> Subscription<M> {
     pub async fn receive(&mut self) -> anyhow::Result<M>
     where
         M: Send,
-        <M as TryFrom<Vec<u8>>>::Error: Into<anyhow::Error> + Send + Sync + 'static,
     {
-        let msg: Vec<_> = self.raw.receive().await?.into();
-        Ok(msg.try_into().map_err(|e: M::Error| e.into())?)
+        let mut raw_msg: Vec<_> = self.raw.receive().await?;
+        Decode::decode(&mut raw_msg)
     }
 }
